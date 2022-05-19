@@ -1,4 +1,5 @@
 class Book{
+    hasError = null
     constructor(title,sinopse){
         this.title = title,
         this.sinopse = sinopse
@@ -8,6 +9,9 @@ class Book{
             title: this.title,
             sinopse: this.sinopse
         }
+    }
+    setError(hasError){
+        this.hasError = hasError
     }
 }
 

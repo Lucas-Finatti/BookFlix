@@ -1,44 +1,41 @@
 const router = require( 'express' ).Router();
-const Book = require('../domain/Book')
-const {db, mongoose} = require('../Database/MongoConnect');
-const { route } = require('express/lib/application');
-
-db.on("error", console.error.bind(console, "connection error:"));
-
-db.once("open", function() {
-  console.log("Connection Successful!");
-});
-
-var BookSchema = mongoose.Schema({
-  title: String,
-  sinopse: String
-});
-
-const BookModel = mongoose.model("model", BookSchema, "booksColection");
+const BookServices = require('../service/BookServices')
+const bookServices = new BookServices()
 
 router.get('/', async(req,res)=>{
-    const queryResponse = await BookModel.find({})
-    res.send(queryResponse)
+    console.log(BookServices)
+    const response = await bookServices.findAll()
+    console.log(response)
+    res.send(response).status(200)
 })
 
 router.get('/find', async(req,res)=>{
     let bookName = req.query.title
-    console.log(bookName)
-    const queryResponse = await BookModel.find({title: bookName})
-    res.send(queryResponse)
+    let status = 200
+    let response
+    try {
+        response = await bookServices.finOne(bookName)
+    } catch(error){
+        status = 400
+        response = error.message
+    }
+    res.status(status).send(response)
 })
 
 router.post('/PostBook',async(req,res)=>{
     const body = req.body
-    console.log(body)
-    const book = new Book(body.title, body.sinopse)
-    //const book = new Book("As cronicas de Narnia", "eles entram num armario")
-    var doc = new BookModel(book.getPropertiesObject());
-    doc.save(function(err, doc) {
-        if (err) return console.error(err);
-        console.log("Document inserted succussfully!");
-    });
-    res.send(200)
+    let bookResponse
+    try {
+        bookResponse = await bookServices.saveOne(body)
+        console.log(bookResponse)
+    }catch(error){
+        res.status(400).send(error.message)
+    }
+    let status = 200
+    if (bookResponse.hasError){
+        status = 500
+    } 
+    res.send(body).status(status)
 });
 
 module.exports = router;
