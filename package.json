@@ -1,0 +1,27 @@
+{
+  "name": "bookflix",
+  "version": "1.0.0",
+  "description": "uma aplicação com o objetivo de armazenar livros para que qualquer um possa ter acesso aos mesmos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucas-Finatti/BookFlix.git"
+  },
+  "author": "Lucas Finatti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lucas-Finatti/BookFlix/issues"
+  },
+  "homepage": "https://github.com/Lucas-Finatti/BookFlix#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.16"
+  }
+}
