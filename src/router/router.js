@@ -10,11 +10,12 @@ router.get('/', async(req,res)=>{
 })
 
 router.get('/find', async(req,res)=>{
-    let bookName = req.query.title
+    let title = req.query.title
+    let author = req.query.author
     let status = 200
     let response
     try {
-        response = await bookServices.finOne(bookName)
+        response = await bookServices.findOne(title, author)
     } catch(error){
         status = 400
         response = error.message

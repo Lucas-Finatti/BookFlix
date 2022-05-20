@@ -9,34 +9,34 @@ db.once("open", function() {
 
 var BookSchema = mongoose.Schema({
   title: String,
-  sinopse: String
+  sinopse: String,
+  author: String
 });
 
 const BookModel = mongoose.model("model", BookSchema, "booksColection");
 
 class BookServices {
-    constructor(){}
     async findAll() {
         const queryResponse = await BookModel.find({})
         return queryResponse
     };
 
-    async finOne(title){
-        if (! title){
-            throw new Error('no title provided')
+    async findOne(title, author){
+        if (! title || ! author){
+            throw new Error('no title or author provided')
         }
-        const queryResponse = await BookModel.find({title: title})
+        const queryResponse = await BookModel.find({title: title, author: author})
         if (queryResponse.length == 0){
             throw new Error('Book not found')
         } 
-        return queryResponse
+        return queryResponse[0]
     };
 
     async saveOne(body){
-        if ( ! body.title || ! body.sinopse ){
+        if ( ! body.title || ! body.sinopse || ! body.author ){
             throw new Error('invalid body data.')
         }
-        const book = new Book(body.title, body.sinopse)
+        const book = new Book(body.title, body.sinopse, body.author)
         var doc = new BookModel(book.getPropertiesObject());
         let savedDoc = await doc.save()
         console.log(savedDoc)
