@@ -45,16 +45,22 @@ npm run run
 
 The script will run the server, then you just need to send a request as a JSON:
 
+Post EX:
 ```Post EX:
 addres: http://localhost:3000/PostBook
 {"title": "Dorian Gray", "sinopse": "the gorgeous young Dorian Gray, the protagonist, becomes a model for a painting by the artist Basil Hallward. 
 Presenter Dorian to Lord Henry Wotton, who makes him aware of his beauty and the value of his youth and initiates him into a world of vice and debauchery.",
 "author": "Oscar Wild"}
 ```
+Get One EX:
 ```Get One EX:
 http://localhost:3000/find?author=Oscar Wild
 or
 http://localhost:3000/find?title=Dorian Gray
+```
+Get EX:
+```
+http://localhost:3000/
 ```
 
 ## Credits
